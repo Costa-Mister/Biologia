@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -146,7 +146,7 @@
     <!-- TOP HEADER -->
     <header class="w-full bg-[var(--surface-card)] border-b-2 border-[var(--border-color)] sticky top-0 z-40 shadow-sm transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
                 
                 <!-- LOGO IF GOIANO -->
                 <div class="flex items-center gap-4">
@@ -179,19 +179,19 @@
                     </div>
                 </div>
 
-                <!-- ALUNOS & TURMA 1º ANO DE ADM -->
-                <div class="custom-card p-3 px-4 flex items-center gap-3 w-full md:w-auto overflow-x-auto no-scrollbar">
-                    <div class="flex items-center gap-1.5 font-bold text-xs uppercase text-[var(--primary-pink)] bg-[var(--primary-pink-bg)] px-2.5 py-1.5 rounded-full flex-shrink-0 border border-[var(--primary-pink)]">
+                <!-- ALUNOS & TURMA 1º ANO DE ADM (Card com largura ideal para múltiplas linhas) -->
+                <div class="custom-card p-3.5 px-5 flex flex-col gap-2.5 w-full lg:w-[480px]">
+                    <div class="flex items-center gap-1.5 font-bold text-xs uppercase text-[var(--primary-pink)] bg-[var(--primary-pink-bg)] px-3 py-1 rounded-full w-fit border border-[var(--primary-pink)]">
                         <i data-lucide="sparkles" class="w-4 h-4 text-[var(--primary-pink)] animate-sparkle"></i>
                         <span>Alunos (1º Ano de ADM):</span>
                     </div>
-                    <div class="flex items-center gap-2 text-xs font-medium whitespace-nowrap">
-                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Leticia Mesak</span>
-                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Laura Rosa</span>
-                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Sophia Rosa</span>
-                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">João Pedro de Oliveira</span>
-                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Gabriel Marcelino</span>
-                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Gabriel Cardoso</span>
+                    <div class="flex flex-wrap gap-1.5 text-xs font-medium">
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-lg hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Sophia Rosa</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-lg hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Laura Rosa</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-lg hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Letícia Mesak</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-lg hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">João Pedro Oliveira</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-lg hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Gabriel Marcelino</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-lg hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Gabriel Cardoso</span>
                     </div>
                 </div>
 
@@ -312,7 +312,7 @@
                 </div>
             </div>
 
-            <!-- Dados Importantes sobre a Saúde do Jovem (Card de PEP removido conforme solicitado)[cite: 3] -->
+            <!-- Dados Importantes sobre a Saúde do Jovem -->
             <div class="custom-card p-6 bg-[var(--text-main)] text-white border-none">
                 <h3 class="text-lg font-bold text-gray-200 mb-4 flex items-center gap-2">
                     <i data-lucide="bar-chart-2" class="w-5 h-5 text-[var(--primary-pink)]"></i> Dados Importantes sobre a Saúde do Jovem
@@ -832,7 +832,6 @@
             banner.classList.remove('hidden');
 
             function speakNext() {
-                // Se a fila foi limpa ou cancelada externamente por stopSpeech(), encerra.
                 if (speechQueueItems.length === 0 || index >= speechQueueItems.length) {
                     stopSpeech();
                     return;
@@ -841,7 +840,6 @@
                 clearHighlights();
                 const currentEl = speechQueueItems[index];
                 
-                // Valida se o elemento ainda existe no DOM
                 if (!document.body.contains(currentEl)) {
                     index++;
                     speakNext();
