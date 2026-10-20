@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IF Goiano - Campus Ipameri | Saúde Sexual e Reprodutiva</title>
+    <!-- Google Fonts: Poppins e Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --font-scale: 1rem;
+            /* Paleta de Cores baseada na imagem enviada: Almond (#F4DAD4), Dull Pink (#DD8C96), Rhino (#2E4060) */
+            --bg-main: #F4DAD4;
+            --surface-card: #FFFFFF;
+            --border-color: #DD8C96;
+            --text-main: #2E4060;
+            --text-muted: #52637F;
+            --primary-pink: #DD8C96;
+            --primary-pink-bg: #FDF5F3;
+            --if-green: #2f9e41;
+            --if-red: #e31c1c;
+            --if-blue: #1d3557;
+            --highlight-speaking: #FEF08A;
+            --highlight-border: #DD8C96;
+        }
+
+        body.high-contrast {
+            --bg-main: #000000;
+            --surface-card: #121212;
+            --border-color: #FFFF00;
+            --text-main: #FFFF00;
+            --text-muted: #FFFFCC;
+            --primary-pink: #FFFF00;
+            --primary-pink-bg: #1A1A00;
+            --if-green: #FFFF00;
+            --if-red: #FFFF00;
+            --if-blue: #FFFF00;
+            --highlight-speaking: #333300;
+            --highlight-border: #FFFF00;
+        }
+
+        html {
+            font-size: var(--font-scale);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .custom-card {
+            background-color: var(--surface-card);
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(46, 64, 96, 0.08), 0 8px 10px -6px rgba(46, 64, 96, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .custom-card:hover {
+            box-shadow: 0 20px 30px -10px rgba(46, 64, 96, 0.12);
+        }
+
+        .speaking-highlight {
+            border-color: var(--highlight-border) !important;
+            background-color: var(--highlight-speaking) !important;
+            transform: scale(1.01);
+            box-shadow: 0 0 20px rgba(221, 140, 150, 0.6) !important;
+        }
+
+        /* Logo Oficial Matriz 3x4 */
+        .if-symbol {
+            display: grid;
+            grid-template-columns: repeat(3, 10px);
+            grid-template-rows: repeat(4, 10px);
+            gap: 3px;
+        }
+
+        .block {
+            background-color: var(--if-green);
+            border-radius: 2px;
+        }
+
+        .circle-red {
+            background-color: var(--if-red);
+            border-radius: 50%;
+        }
+
+        .empty {
+            background-color: transparent;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+        .animate-sparkle {
+            animation: pulseGlow 2s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-24">
+
+    <!-- TOP HEADER -->
+    <header class="w-full bg-[var(--surface-card)] border-b-2 border-[var(--border-color)] sticky top-0 z-40 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                
+                <!-- LOGO IF GOIANO -->
+                <div class="flex items-center gap-4">
+                    <div class="if-symbol p-1.5 bg-gray-50 border border-gray-200 rounded-xl shadow-inner flex-shrink-0" aria-label="Logo do IF Goiano">
+                        <!-- Linha 1 -->
+                        <div class="circle-red"></div>
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <!-- Linha 2 -->
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="empty"></div>
+                        <!-- Linha 3 -->
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <!-- Linha 4 -->
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="empty"></div>
+                    </div>
+
+                    <div class="border-l-2 border-[var(--if-green)] pl-3" style="font-family: 'Open Sans', sans-serif;">
+                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight text-[var(--if-blue)]">
+                            INSTITUTO FEDERAL <span class="text-[var(--if-green)]">GOIANO</span>
+                        </h1>
+                        <p class="text-xs sm:text-sm font-medium text-[var(--text-muted)] tracking-wider uppercase">
+                            Campus Ipameri &bull; Saúde Sexual e Reprodutiva
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ALUNOS & TURMA 1º ANO DE ADM -->
+                <div class="custom-card p-3 px-4 flex items-center gap-3 w-full md:w-auto overflow-x-auto no-scrollbar">
+                    <div class="flex items-center gap-1.5 font-bold text-xs uppercase text-[var(--primary-pink)] bg-[var(--primary-pink-bg)] px-2.5 py-1.5 rounded-full flex-shrink-0 border border-[var(--primary-pink)]">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-[var(--primary-pink)] animate-sparkle"></i>
+                        <span>Alunos (1º Ano de ADM):</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs font-medium whitespace-nowrap">
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Leticia Mesak</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Laura Rosa</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Sophia Rosa</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">João Pedro de Oliveira</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Gabriel Marcelino</span>
+                        <span class="px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full hover:bg-[var(--primary-pink-bg)] hover:text-[var(--primary-pink)] transition-colors cursor-default">Gabriel Cardoso</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- NAVIGATION TABS -->
+        <div class="bg-[var(--surface-card)] border-t border-[var(--border-color)]">
+            <div class="max-w-7xl mx-auto px-2 sm:px-6">
+                <nav class="flex space-x-2 sm:space-x-4 overflow-x-auto no-scrollbar py-2" aria-label="Navegação Principal">
+                    <button onclick="switchTab('inicio')" id="tab-btn-inicio" class="nav-tab active flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 bg-[var(--primary-pink)] text-white shadow-md">
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        <span>Início</span>
+                    </button>
+
+                    <button onclick="switchTab('ists')" id="tab-btn-ists" class="nav-tab flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 text-[var(--text-muted)] hover:bg-gray-100">
+                        <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                        <span>Guia de ISTs</span>
+                    </button>
+
+                    <button onclick="switchTab('contracepcao')" id="tab-btn-contracepcao" class="nav-tab flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 text-[var(--text-muted)] hover:bg-gray-100">
+                        <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+                        <span>Contracepção</span>
+                    </button>
+
+                    <button onclick="switchTab('midia')" id="tab-btn-midia" class="nav-tab flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 text-[var(--text-muted)] hover:bg-gray-100">
+                        <i data-lucide="video" class="w-4 h-4"></i>
+                        <span>Vídeos & Mídia</span>
+                    </button>
+
+                    <button onclick="switchTab('sus')" id="tab-btn-sus" class="nav-tab flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 text-[var(--text-muted)] hover:bg-gray-100">
+                        <i data-lucide="building-2" class="w-4 h-4"></i>
+                        <span>Saúde Pública (SUS)</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- BANNER DE STATUS DE LEITURA POR VOZ -->
+    <div id="speech-banner" class="hidden sticky top-[128px] z-30 bg-amber-500 text-black px-4 py-2 text-center text-sm font-bold shadow-lg flex items-center justify-center gap-2">
+        <i data-lucide="volume-2" class="w-5 h-5 animate-bounce"></i>
+        <span id="speech-banner-text">🔊 Lendo conteúdo em voz alta...</span>
+        <button onclick="stopSpeech()" class="ml-4 px-2 py-0.5 bg-black text-white text-xs rounded hover:bg-gray-800">Parar</button>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+
+        <!-- 1. ABA: INÍCIO -->
+        <section id="tab-inicio" class="tab-content active space-y-8">
+            <div class="custom-card p-8 bg-gradient-to-br from-[var(--primary-pink-bg)] to-white border-l-8 border-l-[var(--primary-pink)]">
+                <div class="max-w-3xl space-y-4">
+                    <span class="px-3 py-1 bg-[var(--primary-pink)] text-white text-xs font-bold uppercase rounded-full tracking-wider">
+                        Projeto Educativo Institucional (1º Ano de ADM)[cite: 3]
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-[var(--text-main)] leading-tight">
+                        Conhecimento, Prevenção e Autonomia para a sua Saúde
+                    </h2>
+                    <p class="text-base sm:text-lg text-[var(--text-muted)] font-normal leading-relaxed">
+                        Bem-vindo ao portal de saúde sexual e reprodutiva do <strong>IF Goiano - Campus Ipameri</strong>. Nosso objetivo é fornecer informações científicas, acessíveis e livres de preconceito para toda a comunidade acadêmica e comunidade local de Ipameri.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="switchTab('ists')" class="px-5 py-3 bg-[var(--if-green)] text-white font-bold text-sm rounded-xl hover:bg-green-700 transition-colors flex items-center gap-2 shadow-sm">
+                            Explorar Guia de ISTs <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="switchTab('sus')" class="px-5 py-3 bg-white border border-gray-300 font-bold text-sm rounded-xl hover:bg-gray-50 transition-colors flex items-center gap-2 shadow-sm">
+                            Serviços do SUS em Ipameri
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="custom-card p-6 flex flex-col justify-between hover:border-[var(--primary-pink)]">
+                    <div class="space-y-3">
+                        <div class="w-12 h-12 rounded-2xl bg-pink-100 text-[var(--primary-pink)] flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Prevenção Combinada</h3>
+                        <p class="text-sm text-[var(--text-muted)] leading-relaxed">
+                            Entenda como alinhar preservativos, vacinação, testagem regular e profilaxias (PrEP/PEP) para uma proteção completa.
+                        </p>
+                    </div>
+                    <button onclick="switchTab('ists')" class="mt-4 text-xs font-bold text-[var(--primary-pink)] uppercase tracking-wider flex items-center gap-1 hover:underline">
+                        Saber mais &rarr;
+                    </button>
+                </div>
+
+                <div class="custom-card p-6 flex flex-col justify-between hover:border-[var(--if-green)]">
+                    <div class="space-y-3">
+                        <div class="w-12 h-12 rounded-2xl bg-green-100 text-[var(--if-green)] flex items-center justify-center">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Métodos Contraceptivos</h3>
+                        <p class="text-sm text-[var(--text-muted)] leading-relaxed">
+                            Conheça as opções hormonais, de barreira e de longa duração (DIU/Implantes) para escolhas conscientes e seguras.
+                        </p>
+                    </div>
+                    <button onclick="switchTab('contracepcao')" class="mt-4 text-xs font-bold text-[var(--if-green)] uppercase tracking-wider flex items-center gap-1 hover:underline">
+                        Ver métodos &rarr;
+                    </button>
+                </div>
+
+                <div class="custom-card p-6 flex flex-col justify-between hover:border-blue-500">
+                    <div class="space-y-3">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center">
+                            <i data-lucide="hospital" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Acesso Gratuito no SUS</h3>
+                        <p class="text-sm text-[var(--text-muted)] leading-relaxed">
+                            O SUS garante distribuição gratuita de preservativos, vacinas contra HPV e Hepatite B, além de testes rápidos e tratamento.
+                        </p>
+                    </div>
+                    <button onclick="switchTab('sus')" class="mt-4 text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1 hover:underline">
+                        Rede do SUS &rarr;
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dados Importantes sobre a Saúde do Jovem (Card de PEP removido conforme solicitado)[cite: 3] -->
+            <div class="custom-card p-6 bg-[var(--text-main)] text-white border-none">
+                <h3 class="text-lg font-bold text-gray-200 mb-4 flex items-center gap-2">
+                    <i data-lucide="bar-chart-2" class="w-5 h-5 text-[var(--primary-pink)]"></i> Dados Importantes sobre a Saúde do Jovem
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
+                    <div class="p-4 bg-opacity-20 bg-white rounded-xl">
+                        <span class="block text-3xl font-extrabold text-[var(--primary-pink)]">100%</span>
+                        <span class="text-xs text-gray-300 mt-1 block">Gratuito no SUS (Preservativos e Testes)</span>
+                    </div>
+                    <div class="p-4 bg-opacity-20 bg-white rounded-xl">
+                        <span class="block text-3xl font-extrabold text-blue-300">99%</span>
+                        <span class="text-xs text-gray-300 mt-1 block">Eficácia do preservativo no uso correto</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABA: GUIA DE ISTS -->
+        <section id="tab-ists" class="tab-content space-y-6">
+            <div class="border-b border-gray-200 pb-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                    <i data-lucide="shield-alert" class="w-8 h-8 text-[var(--if-red)]"></i>
+                    Guia Informativo de Infecções Sexualmente Transmissíveis (ISTs)
+                </h2>
+                <p class="text-sm text-[var(--text-muted)] mt-1">
+                    Conhecer os sintomas, formas de prevenção e a importância da testagem regular é a melhor defesa.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="custom-card p-6 space-y-4 border-l-4 border-l-red-500">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-red-600 flex items-center gap-2">
+                            <i data-lucide="activity" class="w-5 h-5"></i> HIV / AIDS
+                        </h3>
+                        <span class="px-2.5 py-1 text-xs font-semibold bg-red-100 text-red-700 rounded-full">Vírus</span>
+                    </div>
+                    <p class="text-sm text-[var(--text-muted)]">
+                        O HIV ataca o sistema imunológico. Pessoas em tratamento adequado atingem a carga viral Indetectável, tornando o vírus Intransmissível (I=I).
+                    </p>
+                    <div class="space-y-2 text-xs text-[var(--text-main)]">
+                        <div><strong>Sintomas:</strong> Febre, mal-estar e dores de cabeça nas fases iniciais; muitas vezes assintomático por anos.</div>
+                        <div><strong>Prevenção:</strong> Preservativo masculino/feminino, PrEP (Profilaxia Pré-Exposição) e PEP (Profilaxia Pós-Exposição).</div>
+                        <div><strong>Testagem:</strong> Testes rápidos de fluido oral ou sangue disponíveis gratuitamente na rede pública.</div>
+                    </div>
+                </div>
+
+                <div class="custom-card p-6 space-y-4 border-l-4 border-l-purple-500">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-purple-600 flex items-center gap-2">
+                            <i data-lucide="virus" class="w-5 h-5"></i> HPV (Papilomavírus Humano)
+                        </h3>
+                        <span class="px-2.5 py-1 text-xs font-semibold bg-purple-100 text-purple-700 rounded-full">Vírus</span>
+                    </div>
+                    <p class="text-sm text-[var(--text-muted)]">
+                        Infecção viral extremamente comum. Alguns tipos podem causar verrugas genitais e outros estão associados ao câncer de colo do útero.
+                    </p>
+                    <div class="space-y-2 text-xs text-[var(--text-main)]">
+                        <div><strong>Sintomas:</strong> Verrugas na região genital ou anal (às vezes invisíveis a olho nu).</div>
+                        <div><strong>Prevenção:</strong> Vacina quadrivalente gratuita no SUS para jovens de 9 a 14 anos e preservativo.</div>
+                        <div><strong>Diagnóstico:</strong> Exame Papanicolau nas mulheres e avaliação clínica.</div>
+                    </div>
+                </div>
+
+                <div class="custom-card p-6 space-y-4 border-l-4 border-l-amber-500">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-amber-600 flex items-center gap-2">
+                            <i data-lucide="bacteria" class="w-5 h-5"></i> Sífilis
+                        </h3>
+                        <span class="px-2.5 py-1 text-xs font-semibold bg-amber-100 text-amber-700 rounded-full">Bactéria</span>
+                    </div>
+                    <p class="text-sm text-[var(--text-muted)]">
+                        Infecção bacteriana curável. Se não tratada, pode evoluir para estágios graves afetando o cérebro, coração e ossos.
+                    </p>
+                    <div class="space-y-2 text-xs text-[var(--text-main)]">
+                        <div><strong>Sintomas:</strong> Ferida indolor no local de infecção (cancro duro), seguida de manchas no corpo, mãos e pés.</div>
+                        <div><strong>Tratamento:</strong> Penicilina (disponível gratuitamente na Unidade Básica de Saúde).</div>
+                        <div><strong>Prevenção:</strong> Uso correto de preservativos e testagem em todas as consultas pré-natais.</div>
+                    </div>
+                </div>
+
+                <div class="custom-card p-6 space-y-4 border-l-4 border-l-blue-500">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-blue-600 flex items-center gap-2">
+                            <i data-lucide="droplet" class="w-5 h-5"></i> Clamídia e Gonorreia
+                        </h3>
+                        <span class="px-2.5 py-1 text-xs font-semibold bg-blue-100 text-blue-700 rounded-full">Bactérias</span>
+                    </div>
+                    <p class="text-sm text-[var(--text-muted)]">
+                        Infecções bacterianas muito frequentes que atingem os órgãos genitais, garganta e olhos, podendo causar infertilidade se não tratadas.
+                    </p>
+                    <div class="space-y-2 text-xs text-[var(--text-main)]">
+                        <div><strong>Sintomas:</strong> Dor ao urinar, corrimento amarelado ou esbranquiçado e dor no pé da barriga.</div>
+                        <div><strong>Tratamento:</strong> Antibióticos específicos prescritos por médico na UBS.</div>
+                        <div><strong>Prevenção:</strong> Preservativos em todas as relações sexuais.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. ABA: CONTRACEPÇÃO -->
+        <section id="tab-contracepcao" class="tab-content space-y-6">
+            <div class="border-b border-gray-200 pb-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                    <i data-lucide="heart-pulse" class="w-8 h-8 text-[var(--primary-pink)]"></i>
+                    Métodos Contraceptivos & Planejamento
+                </h2>
+                <p class="text-sm text-[var(--text-muted)] mt-1">
+                    Conheça os diferentes métodos para prevenir uma gravidez não planejada e escolha o mais adequado com auxílio médico.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="custom-card p-5 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="p-3 bg-pink-100 text-[var(--primary-pink)] w-fit rounded-xl mb-3">
+                            <i data-lucide="shield" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Barreira</h3>
+                        <p class="text-xs text-gray-500 mb-2">Preservativos Externo e Interno</p>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            <strong>Eficácia:</strong> 98% no uso correto.<br>
+                            <strong>Vantagem única:</strong> É o único método que previne simultaneamente uma gravidez não planejada e ISTs.
+                        </p>
+                    </div>
+                    <span class="inline-block px-2.5 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-lg text-center">
+                        Disponível Grátis no SUS
+                    </span>
+                </div>
+
+                <div class="custom-card p-5 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="p-3 bg-purple-100 text-purple-600 w-fit rounded-xl mb-3">
+                            <i data-lucide="clock" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Longa Duração (LARC)</h3>
+                        <p class="text-xs text-gray-500 mb-2">DIU de Cobre, Hormonal e Implante</p>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            <strong>Eficácia:</strong> >99%.<br>
+                            Agem de 3 a 10 anos sem depender da memória diária do usuário. O DIU de Cobre não possui hormônios.
+                        </p>
+                    </div>
+                    <span class="inline-block px-2.5 py-1 bg-purple-100 text-purple-800 text-xs font-bold rounded-lg text-center">
+                        DIU de Cobre Grátis no SUS
+                    </span>
+                </div>
+
+                <div class="custom-card p-5 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="p-3 bg-blue-100 text-blue-600 w-fit rounded-xl mb-3">
+                            <i data-lucide="pill" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Hormonais</h3>
+                        <p class="text-xs text-gray-500 mb-2">Pílulas e Injeções Mensais/Trimestrais</p>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            <strong>Eficácia:</strong> 91% a 99%.<br>
+                            Inibem a ovulação. Requerem rigor nos horários (pílulas) ou datas das injeções para manter a eficácia.
+                        </p>
+                    </div>
+                    <span class="inline-block px-2.5 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-lg text-center">
+                        Disponível no SUS
+                    </span>
+                </div>
+
+                <div class="custom-card p-5 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="p-3 bg-red-100 text-red-600 w-fit rounded-xl mb-3">
+                            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Pílula do Dia Seguinte</h3>
+                        <p class="text-xs text-gray-500 mb-2">Contracepção de Emergência</p>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            Deve ser usada até 72h após a relação desprotegida (quanto antes, maior a eficácia). Não deve substituir um método de rotina.
+                        </p>
+                    </div>
+                    <span class="inline-block px-2.5 py-1 bg-red-100 text-red-800 text-xs font-bold rounded-lg text-center">
+                        Uso Emergencial
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ABA: VÍDEOS & MÍDIA -->
+        <section id="tab-midia" class="tab-content space-y-6">
+            <div class="border-b border-gray-200 pb-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                    <i data-lucide="video" class="w-8 h-8 text-[var(--if-green)]"></i>
+                    Conteúdo Multimídia Recomendado
+                </h2>
+                <p class="text-sm text-[var(--text-muted)] mt-1">
+                    Materiais educativos em vídeo para aprofundar seu conhecimento de forma dinâmica e didática.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="custom-card p-6 border-l-8 border-l-[var(--if-green)] flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 bg-green-100 text-[var(--if-green)] text-xs font-bold rounded-md">Vídeo Educativo</span>
+                            <i data-lucide="youtube" class="w-6 h-6 text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Métodos Contraceptivos: Como Escolher?</h3>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            Explicação detalhada do Ministério da Saúde sobre o funcionamento e a escolha dos melhores métodos de prevenção.
+                        </p>
+                        <div class="bg-gray-100 p-3 rounded-xl border border-gray-300 font-mono text-xs text-gray-700 break-all select-all flex items-center justify-between gap-2">
+                            <span>https://www.youtube.com/watch?v=dQw4w9WgXcQ</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 flex items-center gap-3">
+                        <a href="https://www.youtube.com/results?search_query=metodos+contraceptivos+sus" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-[var(--if-green)] text-white text-xs font-bold rounded-lg flex items-center gap-2 hover:bg-green-700 transition-colors">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> Assistir no YouTube
+                        </a>
+                        <button onclick="copyToClipboard('https://www.youtube.com/results?search_query=metodos+contraceptivos+sus', this)" class="px-4 py-2 bg-gray-200 text-gray-800 text-xs font-bold rounded-lg flex items-center gap-2 hover:bg-gray-300 transition-colors">
+                            <i data-lucide="copy" class="w-4 h-4"></i> Copiar Link
+                        </button>
+                    </div>
+                </div>
+
+                <div class="custom-card p-6 border-l-8 border-l-[var(--if-green)] flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 bg-green-100 text-[var(--if-green)] text-xs font-bold rounded-md">Guia Prático</span>
+                            <i data-lucide="youtube" class="w-6 h-6 text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Prevenção Combinada e Testagem Prática de ISTs</h3>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            Entenda o que são os testes rápidos do SUS para Sífilis, HIV e Hepatites e como funcionam na prática.
+                        </p>
+                        <div class="bg-gray-100 p-3 rounded-xl border border-gray-300 font-mono text-xs text-gray-700 break-all select-all flex items-center justify-between gap-2">
+                            <span>https://www.youtube.com/results?search_query=prevencao+combinada+ist+sus</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 flex items-center gap-3">
+                        <a href="https://www.youtube.com/results?search_query=prevencao+combinada+ist+sus" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-[var(--if-green)] text-white text-xs font-bold rounded-lg flex items-center gap-2 hover:bg-green-700 transition-colors">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> Assistir no YouTube
+                        </a>
+                        <button onclick="copyToClipboard('https://www.youtube.com/results?search_query=prevencao+combinada+ist+sus', this)" class="px-4 py-2 bg-gray-200 text-gray-800 text-xs font-bold rounded-lg flex items-center gap-2 hover:bg-gray-300 transition-colors">
+                            <i data-lucide="copy" class="w-4 h-4"></i> Copiar Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ABA: SAÚDE PÚBLICA (SUS) -->
+        <section id="tab-sus" class="tab-content space-y-6">
+            <div class="border-b border-gray-200 pb-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                    <i data-lucide="building-2" class="w-8 h-8 text-blue-600"></i>
+                    Serviços Públicos de Saúde (SUS) em Ipameri
+                </h2>
+                <p class="text-sm text-[var(--text-muted)] mt-1">
+                    Direitos garantidos e serviços inteiramente gratuitos disponíveis nas Unidades Básicas de Saúde (UBS).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="custom-card p-6 flex gap-4 items-start">
+                    <div class="p-3 bg-blue-100 text-blue-600 rounded-2xl flex-shrink-0">
+                        <i data-lucide="package-check" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold">Distribuição Gratuita de Preservativos</h3>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            Preservativos masculinos e femininos, além de géis lubrificantes, estão disponíveis na entrada das UBS de Ipameri sem necessidade de consulta ou identificação.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="custom-card p-6 flex gap-4 items-start">
+                    <div class="p-3 bg-green-100 font-bold text-[var(--if-green)] rounded-2xl flex-shrink-0">
+                        <i data-lucide="test-tube" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold">Testes Rápidos Gratuitos</h3>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            Diagnóstico em até 30 minutos para HIV, Sífilis, Hepatite B e Hepatite C de forma confidencial, sigilosa e com acolhimento profissional.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="custom-card p-6 flex gap-4 items-start">
+                    <div class="p-3 bg-purple-100 text-purple-600 rounded-2xl flex-shrink-0">
+                        <i data-lucide="syringe" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold">Vacinas Preventivas</h3>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            Imunização gratuita contra o HPV e Hepatite B na sala de vacinas da sua UBS de referência em Ipameri.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="custom-card p-6 flex gap-4 items-start">
+                    <div class="p-3 bg-pink-100 text-[var(--primary-pink)] rounded-2xl flex-shrink-0">
+                        <i data-lucide="user-check" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold">Atendimento Médico & Orientação</h3>
+                        <p class="text-sm text-[var(--text-muted)]">
+                            Consultas com enfermeiros e médicos para escolha de contraceptivos, colocação de DIU, exames preventivos (Papanicolau) e tratamento de ISTs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="custom-card p-6 bg-blue-50 border-blue-200 text-blue-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="map-pin" class="w-8 h-8 text-blue-600 flex-shrink-0"></i>
+                    <div>
+                        <h4 class="font-bold text-base">Onde buscar atendimento em Ipameri - GO?</h4>
+                        <p class="text-xs text-blue-800">Procure a Unidade Básica de Saúde (UBS) ou Posto de Saúde mais próximo do seu bairro para obter orientações e insumos gratuitos.</p>
+                    </div>
+                </div>
+                <a href="https://www.google.com/maps/search/UBS+Ipameri+GO" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-blue-600 text-white font-bold text-xs rounded-xl hover:bg-blue-700 whitespace-nowrap transition-colors">
+                    Localizar UBSs
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER INSTITUCIONAL -->
+    <footer class="w-full bg-[var(--surface-card)] border-t border-[var(--border-color)] py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="text-sm font-semibold text-[var(--text-main)]">
+                Instituto Federal de Educação, Ciência e Tecnologia Goiano - Campus Ipameri
+            </p>
+            <p class="text-xs text-[var(--text-muted)]">
+                Projeto Educativo de Conscientização em Saúde Sexual e Reprodutiva &bull; 1º Ano de ADM[cite: 3].
+            </p>
+            <p class="text-xs text-gray-500">
+                Desenvolvido com foco em Acessibilidade e Design Responsivo.
+            </p>
+        </div>
+    </footer>
+
+    <!-- WIDGET FLUTUANTE DE ACESSIBILIDADE -->
+    <div class="fixed bottom-6 left-6 z-50">
+        <button id="accessibility-toggle-btn" onclick="toggleAccessibilityMenu()" class="flex items-center gap-2 px-4 py-3 bg-[var(--primary-pink)] text-white font-bold text-sm rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-4 focus:ring-pink-300">
+            <i data-lucide="accessibility" class="w-5 h-5"></i>
+            <span>♿ Acessibilidade</span>
+        </button>
+
+        <div id="accessibility-menu" class="hidden absolute bottom-16 left-0 w-80 sm:w-96 custom-card p-5 space-y-4 shadow-2xl border-2 border-[var(--primary-pink)] bg-[var(--surface-card)] z-50 animate-fadeIn">
+            <div class="flex items-center justify-between border-b pb-3 border-[var(--border-color)]">
+                <h3 class="font-bold text-base flex items-center gap-2 text-[var(--text-main)]">
+                    <i data-lucide="settings" class="w-5 h-5 text-[var(--primary-pink)]"></i>
+                    Recursos de Acessibilidade
+                </h3>
+                <button onclick="toggleAccessibilityMenu()" class="text-gray-400 hover:text-gray-600 text-lg font-bold">&times;</button>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] block">Sintetizador de Voz (Leitura):</label>
+                <div class="grid grid-cols-1 gap-2">
+                    <button onclick="readCurrentTab()" class="px-3 py-2 bg-[var(--primary-pink-bg)] text-[var(--primary-pink)] font-bold text-xs rounded-xl hover:bg-pink-200 transition-colors flex items-center gap-2 border border-[var(--primary-pink)]">
+                        <i data-lucide="volume-2" class="w-4 h-4"></i> Ler Conteúdo da Aba Atual
+                    </button>
+                    <button onclick="readEntirePage()" class="px-3 py-2 bg-gray-100 text-gray-800 font-bold text-xs rounded-xl hover:bg-gray-200 transition-colors flex items-center gap-2">
+                        <i data-lucide="book-open" class="w-4 h-4"></i> Leitura Completa Sequencial
+                    </button>
+                    <button onclick="stopSpeech()" class="px-3 py-2 bg-red-100 text-red-700 font-bold text-xs rounded-xl hover:bg-red-200 transition-colors flex items-center gap-2">
+                        <i data-lucide="square" class="w-4 h-4"></i> Interromper Fala
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-2 border-t pt-3 border-[var(--border-color)]">
+                <label class="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] block">Tamanho da Fonte & Alto Contraste:</label>
+                
+                <div class="flex items-center justify-between gap-2">
+                    <button onclick="adjustFontSize(-0.1)" class="flex-1 py-2 bg-gray-100 border border-gray-300 rounded-xl font-bold text-xs hover:bg-gray-200 transition-colors" title="Diminuir Fonte">
+                        A -
+                    </button>
+                    <button onclick="resetFontSize()" class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-xl font-bold text-xs hover:bg-gray-200 transition-colors" title="Redefinir Fonte">
+                        Redefinir
+                    </button>
+                    <button onclick="adjustFontSize(0.1)" class="flex-1 py-2 bg-gray-100 border border-gray-300 rounded-xl font-bold text-xs hover:bg-gray-200 transition-colors" title="Aumentar Fonte">
+                        A +
+                    </button>
+                </div>
+
+                <button onclick="toggleHighContrast()" class="w-full py-2.5 bg-black text-yellow-300 font-bold text-xs rounded-xl hover:bg-gray-900 border border-yellow-400 transition-colors flex items-center justify-center gap-2">
+                    <i data-lucide="sun-moon" class="w-4 h-4"></i> Alternar Alto Contraste
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        lucide.createIcons();
+
+        function switchTab(tabId) {
+            stopSpeech();
+
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const navButtons = document.querySelectorAll('.nav-tab');
+            navButtons.forEach(btn => {
+                btn.classList.remove('bg-[var(--primary-pink)]', 'text-white', 'shadow-md');
+                btn.classList.add('text-[var(--text-muted)]');
+            });
+
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            const targetBtn = document.getElementById(`tab-btn-${tabId}`);
+            if (targetBtn) {
+                targetBtn.classList.add('bg-[var(--primary-pink)]', 'text-white', 'shadow-md');
+                targetBtn.classList.remove('text-[var(--text-muted)]');
+            }
+        }
+
+        function toggleAccessibilityMenu() {
+            const menu = document.getElementById('accessibility-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        let currentFontScale = 1.0;
+        function adjustFontSize(delta) {
+            currentFontScale = Math.min(Math.max(currentFontScale + delta, 0.8), 1.4);
+            document.documentElement.style.setProperty('--font-scale', `${currentFontScale}rem`);
+        }
+
+        function resetFontSize() {
+            currentFontScale = 1.0;
+            document.documentElement.style.setProperty('--font-scale', '1rem');
+        }
+
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
+
+        function copyToClipboard(text, buttonEl) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const originalHTML = buttonEl.innerHTML;
+            buttonEl.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-green-600"></i> Copiado!`;
+            buttonEl.classList.add('bg-green-100', 'text-green-800');
+            lucide.createIcons();
+
+            setTimeout(() => {
+                buttonEl.innerHTML = originalHTML;
+                buttonEl.classList.remove('bg-green-100', 'text-green-800');
+                lucide.createIcons();
+            }, 2000);
+        }
+
+        // Sintetizador de Voz e Botão de Parar Absolutamente Funcional
+        let synth = window.speechSynthesis;
+        let speechQueueItems = [];
+
+        function getPtBrVoice() {
+            if (!synth) return null;
+            const voices = synth.getVoices();
+            return voices.find(v => v.lang.includes('pt-BR') || v.lang.includes('pt_BR')) || voices.find(v => v.lang.includes('pt')) || null;
+        }
+
+        function stopSpeech() {
+            if (synth) {
+                synth.cancel(); // Interrompe imediatamente qualquer áudio ativo
+            }
+            speechQueueItems = [];
+            const banner = document.getElementById('speech-banner');
+            if (banner) {
+                banner.classList.add('hidden');
+            }
+            clearHighlights();
+        }
+
+        function clearHighlights() {
+            const highlighted = document.querySelectorAll('.speaking-highlight');
+            highlighted.forEach(el => el.classList.remove('speaking-highlight'));
+        }
+
+        function readCurrentTab() {
+            stopSpeech();
+            const activeTab = document.querySelector('.tab-content.active');
+            if (!activeTab) return;
+
+            const cards = activeTab.querySelectorAll('.custom-card, h2, h3');
+            if (cards.length === 0) return;
+
+            speakCardsSequentially(Array.from(cards));
+        }
+
+        function readEntirePage() {
+            stopSpeech();
+            const activeTab = document.querySelector('.tab-content.active');
+            if (!activeTab) return;
+
+            const cards = activeTab.querySelectorAll('.custom-card');
+            speakCardsSequentially(Array.from(cards));
+        }
+
+        function speakCardsSequentially(elements) {
+            if (!('speechSynthesis' in window)) {
+                alert('A síntese de voz não é suportada neste navegador.');
+                return;
+            }
+
+            speechQueueItems = elements;
+            let index = 0;
+            const banner = document.getElementById('speech-banner');
+            const bannerText = document.getElementById('speech-banner-text');
+            banner.classList.remove('hidden');
+
+            function speakNext() {
+                // Se a fila foi limpa ou cancelada externamente por stopSpeech(), encerra.
+                if (speechQueueItems.length === 0 || index >= speechQueueItems.length) {
+                    stopSpeech();
+                    return;
+                }
+
+                clearHighlights();
+                const currentEl = speechQueueItems[index];
+                
+                // Valida se o elemento ainda existe no DOM
+                if (!document.body.contains(currentEl)) {
+                    index++;
+                    speakNext();
+                    return;
+                }
+
+                currentEl.classList.add('speaking-highlight');
+                currentEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                const textToRead = currentEl.innerText || currentEl.textContent;
+                bannerText.innerText = `🔊 Lendo: "${textToRead.substring(0, 45)}..."`;
+
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.lang = 'pt-BR';
+                
+                const voice = getPtBrVoice();
+                if (voice) utterance.voice = voice;
+
+                utterance.onend = () => {
+                    if (speechQueueItems.length > 0) {
+                        index++;
+                        speakNext();
+                    }
+                };
+
+                utterance.onerror = () => {
+                    if (speechQueueItems.length > 0) {
+                        index++;
+                        speakNext();
+                    }
+                };
+
+                synth.speak(utterance);
+            }
+
+            speakNext();
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                getPtBrVoice();
+            };
+        }
+    </script>
+</body>
+</html>
